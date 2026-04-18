@@ -95,7 +95,9 @@ app.get("/jobs", (req, res) => {
           <p>${job.company}</p>
           <p>${job.location}</p>
           <p>${job.salary}</p>
+          <a href="/apply/${job.id}">
           <button>Apply</button>
+          </a>
         </div>
         `;
       });
@@ -108,6 +110,26 @@ app.get("/jobs", (req, res) => {
       `;
 
       res.send(output);
+    }
+
+  });
+
+});
+
+// Apply Route
+app.get("/apply/:id", (req, res) => {
+
+  const jobId = req.params.id;
+  const userId = 1; // temporary demo user
+
+  const sql = "INSERT INTO applications (user_id, job_id, status) VALUES (?, ?, ?)";
+
+  db.query(sql, [userId, jobId, "Applied"], (err, result) => {
+
+    if (err) {
+      res.send("Application Failed ❌");
+    } else {
+      res.send("Applied Successfully ✅ <br><a href='/jobs'>Back to Jobs</a>");
     }
 
   });

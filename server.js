@@ -65,6 +65,55 @@ app.post("/login", (req, res) => {
   });
 });
 
+// Jobs Route
+app.get("/jobs", (req, res) => {
+
+  const sql = "SELECT * FROM jobs";
+
+  db.query(sql, (err, result) => {
+
+    if (err) {
+      res.send("Error loading jobs");
+    } else {
+
+      let output = `
+      <html>
+      <head>
+      <title>Jobs</title>
+      <link rel="stylesheet" href="/style.css">
+      </head>
+      <body>
+      <section class="jobs">
+      <h2>Available Jobs</h2>
+      <div class="job-container">
+      `;
+
+      result.forEach(job => {
+        output += `
+        <div class="card">
+          <h3>${job.title}</h3>
+          <p>${job.company}</p>
+          <p>${job.location}</p>
+          <p>${job.salary}</p>
+          <button>Apply</button>
+        </div>
+        `;
+      });
+
+      output += `
+      </div>
+      </section>
+      </body>
+      </html>
+      `;
+
+      res.send(output);
+    }
+
+  });
+
+});
+
 // Start Server
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

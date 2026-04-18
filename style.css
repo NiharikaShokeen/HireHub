@@ -1,0 +1,91 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, sans-serif;
+}
+
+body{
+  background:#f4f7ff;
+}
+
+/* Navbar */
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 50px;
+  background:#2d5bff;
+  color:white;
+}
+
+nav ul{
+  display:flex;
+  list-style:none;
+  gap:20px;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+}
+
+/* Hero */
+.hero{
+  text-align:center;
+  padding:80px 20px;
+}
+
+.hero h1{
+  font-size:45px;
+  color:#2d5bff;
+}
+
+.hero p{
+  margin:15px 0;
+  font-size:18px;
+}
+
+button{
+  padding:12px 25px;
+  border:none;
+  background:#2d5bff;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#1e43c9;
+}
+
+/* Jobs */
+.jobs{
+  padding:40px;
+  text-align:center;
+}
+
+.job-container{
+  display:flex;
+  justify-content:center;
+  gap:25px;
+  margin-top:30px;
+  flex-wrap:wrap;
+}
+
+.card{
+  background:white;
+  padding:25px;
+  width:250px;
+  border-radius:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.card h3{
+  color:#2d5bff;
+  margin-bottom:10px;
+}
+
+.card p{
+  margin:8px 0;
+}

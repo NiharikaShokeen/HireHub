@@ -191,6 +191,66 @@ app.get("/dashboard", (req, res) => {
 
 });
 
+// Post Job Form Page
+app.get("/postjob", (req, res) => {
+  res.send(`
+  <html>
+  <head>
+    <title>Post Job</title>
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+
+  <section class="form-page">
+    <div class="form-box">
+      <h2>Post New Job</h2>
+
+      <form action="/postjob" method="POST">
+
+        <input type="text" name="title" placeholder="Job Title" required>
+
+        <input type="text" name="company" placeholder="Company Name" required>
+
+        <input type="text" name="location" placeholder="Location" required>
+
+        <input type="text" name="salary" placeholder="Salary" required>
+
+        <textarea name="description" placeholder="Description" required style="width:100%;padding:12px;margin:10px 0;border:1px solid #ccc;border-radius:8px;"></textarea>
+
+        <button type="submit">Post Job</button>
+
+      </form>
+
+    </div>
+  </section>
+
+  </body>
+  </html>
+  `);
+});
+
+// Save Posted Job
+app.post("/postjob", (req, res) => {
+
+  const { title, company, location, salary, description } = req.body;
+
+  const sql = `
+  INSERT INTO jobs (title, company, location, salary, description)
+  VALUES (?, ?, ?, ?, ?)
+  `;
+
+  db.query(sql, [title, company, location, salary, description], (err, result) => {
+
+    if (err) {
+      res.send("Job Posting Failed ❌");
+    } else {
+      res.send("Job Posted Successfully ✅ <br><a href='/jobs'>View Jobs</a>");
+    }
+
+  });
+
+});
+
 // Start Server
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

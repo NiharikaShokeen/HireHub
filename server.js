@@ -46,6 +46,25 @@ app.post("/register", (req, res) => {
   });
 });
 
+// Login Route
+app.post("/login", (req, res) => {
+  const { email, password } = req.body;
+
+  const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+
+  db.query(sql, [email, password], (err, result) => {
+    if (err) {
+      res.send("Login Error");
+    } 
+    else if (result.length > 0) {
+      res.send("Login Successful ✅");
+    } 
+    else {
+      res.send("Invalid Email or Password ❌");
+    }
+  });
+});
+
 // Start Server
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

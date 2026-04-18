@@ -136,6 +136,61 @@ app.get("/apply/:id", (req, res) => {
 
 });
 
+// Dashboard Route
+app.get("/dashboard", (req, res) => {
+
+  const userId = 1; // temporary demo user
+
+  const sql = `
+  SELECT jobs.title, jobs.company, jobs.location, applications.status
+  FROM applications
+  JOIN jobs ON applications.job_id = jobs.id
+  WHERE applications.user_id = ?
+  `;
+
+  db.query(sql, [userId], (err, result) => {
+
+    if (err) {
+      res.send("Error loading dashboard");
+    } else {
+
+      let output = `
+      <html>
+      <head>
+      <title>Dashboard</title>
+      <link rel="stylesheet" href="/style.css">
+      </head>
+      <body>
+      <section class="jobs">
+      <h2>My Applied Jobs</h2>
+      <div class="job-container">
+      `;
+
+      result.forEach(job => {
+        output += `
+        <div class="card">
+          <h3>${job.title}</h3>
+          <p>${job.company}</p>
+          <p>${job.location}</p>
+          <p>Status: ${job.status}</p>
+        </div>
+        `;
+      });
+
+      output += `
+      </div>
+      </section>
+      </body>
+      </html>
+      `;
+
+      res.send(output);
+    }
+
+  });
+
+});
+
 // Start Server
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

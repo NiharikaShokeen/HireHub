@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const mysql = require("mysql2");
 const bodyParser = require("body-parser");
+require("dotenv").config();
 
 const app = express();
 const PORT = 3000;
@@ -12,11 +13,11 @@ app.use(express.static(__dirname));
 
 // MySQL Connection
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "hirehub",
-  port: 3307
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT
 });
 
 db.connect((err) => {
